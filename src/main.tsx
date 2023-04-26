@@ -1,11 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+import { StoreProvider } from './context/store';
+import App from './App';
+import './assets/stylesheets/global.scss';
+
+const element = document.getElementById('root') as HTMLElement;
+const root = createRoot(element);
+
 root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
+  <StrictMode>
+    <StoreProvider>
+      <App />
+    </StoreProvider>
+  </StrictMode>
 );

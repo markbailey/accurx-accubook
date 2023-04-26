@@ -1,61 +1,64 @@
-import { useState } from 'react';
-import classNames from 'classnames';
-import { ReactComponent as ReactLogo } from './assets/react.svg';
-import { ReactComponent as ViteLogo } from './assets/vite.svg';
-import { ReactComponent as TypescriptLogo } from './assets/typescript.svg';
-import { ReactComponent as ScssLogo } from './assets/scss.svg';
-import styles from './App.module.scss';
+import { useContext, useEffect, useState } from 'react';
+
+import { columns } from './data/datatable.json';
+import dummyData from './data/dummy-data.json';
+
+import { StoreContext } from './context/store';
+import useMediaQuery, { MediaQuery } from './hooks/useMediaQuery';
+import useDebounce from './hooks/useDebounce';
+import { mount } from './utilities/show';
+
+import Appbar from './components/Appbar';
+import DataTable from './components/DataTable';
+import DataGrid from './components/DataGrid';
+import DataCard from './components/DataCard';
+
+import PageHeader from './components/PageHeader';
+import Pagination from './components/Pagination';
+import styles from './assets/stylesheets/app.module.scss';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
-    const [count, setCount] = useState(0);
+  const { totalPages, records, isLoading, error, getPagedRecords, searchRecords } =
+    useContext(StoreContext);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState('');
+  const isDesktop = useMediaQuery(MediaQuery.isDesktop);
+  useDebounce(() => searchRecords(search), 500, [search]);
 
-    return (
-        <div className={styles.App}>
-            <div>
-                <a href="https://vitejs.dev" target="_blank">
-                    <ViteLogo
-                        height="6em"
-                        width="6em"
-                        className={classNames(styles.logo)}
-                        title="Vite logo"
-                    />
-                </a>
-                <a href="https://reactjs.org" target="_blank">
-                    <ReactLogo
-                        height="6em"
-                        width="6em"
-                        className={classNames(styles.logo, styles.react)}
-                        title="React logo"
-                    />
-                </a>
-                <a href="https://www.typescriptlang.org/" target="_blank">
-                    <TypescriptLogo
-                        height="6em"
-                        width="6em"
-                        className={classNames(styles.logo, styles.ts)}
-                        title="Typescript logo"
-                    />
-                </a>
-                <a href="https://sass-lang.com/" target="_blank">
-                    <ScssLogo
-                        height="6em"
-                        width="6em"
-                        className={classNames(styles.logo, styles.scss)}
-                        title="SCSS logo"
-                    />
-                </a>
-            </div>
-            <div className={styles.card}>
-                <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className={styles['read-the-docs']}>
-                Click on the Vite and React logos to learn more
-            </p>
-        </div>
-    );
+  const renderDataCards = () =>
+    records.map((data) => (
+      <DataCard
+        key={`dataCard${data.id}`}
+        lastName={data.lastName}
+        firstName={data.firstName}
+        nhsNumber={data.nhsNumber}
+        vaccineType={data.vaccineType}
+      />
+    ));
+
+  useEffect(() => {
+    getPagedRecords(page);
+  }, [page, getPagedRecords]);
+
+  return (
+    <>
+      <Appbar />
+      <PageHeader title="Covid19 Vaccinations" />
+      <main className={styles.content}>
+        {mount(!isDesktop, <DataGrid>{renderDataCards()}</DataGrid>)}
+        {mount(
+          isDesktop,
+          <DataTable
+            columns={columns as DataColumn[]}
+            records={records}
+            pager={<Pagination page={page} totalPages={totalPages} onPageChange={setPage} />}
+          />
+        )}
+      </main>
+      <ScrollToTop offset={0} />
+    </>
+  );
 }
 
 export default App;
