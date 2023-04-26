@@ -1,0 +1,7 @@
+{
+  "columns": [
+    { "label": "Patient Name", "fields": ["lastName", "firstName"] },
+    { "label": "NHS Number", "fields": ["nhsNumber"] },
+    { "label": "Vaccine", "fields": ["vaccineType"] }
+  ]
+}

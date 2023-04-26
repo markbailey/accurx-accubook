@@ -1,0 +1,27 @@
+.dataTable {
+  border-collapse: collapse;
+  width: var(--full);
+
+  th {
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  th,
+  td {
+    padding: var(--spacing-6);
+  }
+
+  th:not(:first-child):last-child,
+  td:not(:first-child):last-child {
+    text-align: right;
+  }
+}
+
+.dataRow {
+  background-color: var(--paper);
+
+  &:not(:last-child) {
+    border-bottom: var(--spacing-6) solid var(--bg);
+  }
+}

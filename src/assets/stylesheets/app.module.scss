@@ -1,0 +1,12 @@
+@use 'mixins' as *;
+
+.content {
+  --p: var(--spacing-4);
+  @include container;
+  z-index: 1;
+  padding: var(--p);
+
+  @media screen and (min-width: 62rem) {
+    --p: var(--spacing-6);
+  }
+}

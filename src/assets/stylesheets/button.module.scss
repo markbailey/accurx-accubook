@@ -1,0 +1,20 @@
+@use 'sass:color';
+@use 'sass:map';
+
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.button {
+  $color: map.get($colors, 'light');
+  $background-color: map.get($colors, 'primary');
+  @include button-style($background-color, $color);
+
+  padding: var(--spacing-5) var(--spacing-6);
+  text-transform: uppercase;
+}
+
+.danger {
+  $color: map.get($colors, 'light');
+  $background-color: map.get($colors, 'danger');
+  @include button-style($background-color, $color);
+}

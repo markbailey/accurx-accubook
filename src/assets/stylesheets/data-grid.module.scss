@@ -1,0 +1,23 @@
+.grid {
+  --grid-cols: 1fr;
+  display: grid;
+  grid-template-columns: var(--grid-cols);
+
+  @media (min-width: 48rem) {
+    --grid-cols: 1fr 1fr;
+  }
+
+  @media (min-width: 64rem) {
+    --grid-cols: 1fr 1fr 1fr;
+  }
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-4);
+
+  > * {
+    flex: 1;
+  }
+}

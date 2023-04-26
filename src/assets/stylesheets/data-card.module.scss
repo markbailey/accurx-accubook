@@ -1,0 +1,38 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.card {
+  @include background-icon(var(--128));
+  --p: var(--spacing-6);
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--spacing-6);
+  padding: var(--p);
+  color: var(--text);
+  background-color: var(--paper);
+
+  > div:nth-child(2) {
+    text-align: right;
+  }
+
+  @media (min-width: 48rem) {
+    --p: var(--spacing-6) var(--spacing-8);
+  }
+}
+
+.title {
+  --color: var(--secondary);
+  color: var(--color);
+  text-transform: uppercase;
+  margin: var(--spacing-0);
+
+  &:not(:first-child) {
+    margin-top: var(--spacing-6);
+  }
+
+  // Light Mode
+  @media (prefers-color-scheme: light) {
+    --color: var(--dark);
+  }
+}

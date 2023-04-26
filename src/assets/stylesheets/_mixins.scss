@@ -1,0 +1,104 @@
+@use 'sass:color';
+@use 'variables' as *;
+
+@mixin container {
+  --max-w: var(--full);
+  --mb: var(--spacing-6);
+
+  width: var(--full);
+  max-width: var(--max-w);
+  margin: var(--spacing-0) auto var(--mb);
+  padding: var(--spacing-0) var(--spacing-6);
+
+  &:last-child {
+    --mb: var(--spacing-0);
+  }
+
+  @media (min-width: 48rem) {
+    --max-w: 45rem;
+  }
+
+  @media (min-width: 62rem) {
+    --max-w: 60rem;
+  }
+}
+
+// @mixin container-fluid {
+//   --mb: var(--spacing-6);
+
+//   width: var(--full);
+//   margin: var(--spacing-0) auto var(--mb);
+//   padding: var(--spacing-0) var(--spacing-6);
+
+//   &:last-child {
+//     --mb: var(--spacing-0);
+//   }
+// }
+
+@mixin paper {
+  color: var(--text);
+  background-color: var(--paper);
+}
+
+@mixin button-style($background-color, $color) {
+  $lightness-hover: 10%;
+  $lightness-active: -5%;
+  @if (color.blackness($color) > 50%) {
+    $lightness-hover: 15%;
+    $lightness-active: 5%;
+  }
+
+  --transition: 0.25s ease-in-out;
+  --btn-color: #{$background-color};
+
+  // appearance: none;
+  border-width: var(--border-1);
+  border-style: solid;
+  border-radius: var(--rounded-0);
+  transition: color var(--transition), background-color var(--transition),
+    border-color var(--transition);
+
+  &:not(:disabled) {
+    color: $color;
+    background-color: var(--btn-color);
+    border-color: var(--btn-color);
+    cursor: pointer;
+  }
+
+  &:not(:disabled):hover {
+    --btn-color: #{color.adjust($background-color, $lightness: $lightness-hover)};
+  }
+
+  &:not(:disabled):active {
+    --btn-color: #{color.adjust($background-color, $lightness: $lightness-active)};
+  }
+
+  &:not(:disabled):focus-visible {
+    outline: var(--border-2) solid #{color.adjust($background-color, $lightness: $lightness-hover)};
+    outline-offset: calc(var(--spacing-2) * -1);
+  }
+}
+
+@mixin background-icon($size) {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    --bg-size: #{$size};
+    --bg-pos: calc((var(--bg-size) / 3) + var(--full));
+
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: var(--spacing-0);
+    left: var(--spacing-0);
+    width: var(--full);
+    height: var(--full);
+
+    background-image: $coronavirus-icon;
+    background-repeat: no-repeat;
+    background-position: var(--bg-pos) var(--bg-pos);
+    background-size: var(--bg-size);
+    opacity: 0.25;
+  }
+}
