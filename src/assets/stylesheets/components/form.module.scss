@@ -58,24 +58,24 @@
 }
 
 // Specific Fields
-.search {
-  position: relative;
-  isolation: isolate;
-  padding-left: var(--spacing-10);
+// .search {
+//   position: relative;
+//   isolation: isolate;
+//   padding-left: var(--spacing-10);
 
-  &::before {
-    content: '';
-    z-index: -1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: var(--full);
-    height: var(--full);
-    background-image: $search-icon;
-    background-repeat: no-repeat;
-    // background-position: var(--spacing-4) center;
-  }
-}
+//   &::before {
+//     content: '';
+//     z-index: -1;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: var(--full);
+//     height: var(--full);
+//     background-image: $search-icon;
+//     background-repeat: no-repeat;
+//     // background-position: var(--spacing-4) center;
+//   }
+// }
 
 .select {
   min-height: var(--field-h);
