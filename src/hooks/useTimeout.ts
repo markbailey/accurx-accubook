@@ -4,7 +4,7 @@ export type Callback = () => void;
 
 function useTimeout(callback: Callback, delay: number) {
   const callbackRef = useRef(callback);
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
 
   const set = useCallback(() => {
     timeoutRef.current = setTimeout(callbackRef.current, delay);
