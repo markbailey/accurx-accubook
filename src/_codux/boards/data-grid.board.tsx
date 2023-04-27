@@ -19,7 +19,7 @@ export default createBoard({
   Board: () => <DataGrid>{renderCards()}</DataGrid>,
   environmentProps: {
     canvasWidth: 1024,
-    windowWidth: 1304,
-    windowHeight: 667,
+    windowWidth: 1024,
+    windowHeight: 768,
   },
 });

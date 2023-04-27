@@ -1,7 +1,7 @@
 import { HTMLAttributes, PropsWithChildren } from 'react';
 import classNames from 'classnames';
-import styles from '../assets/stylesheets/data-table.module.scss';
 import { mount } from '../utilities/show';
+import styles from '../assets/stylesheets/components/data-table.module.scss';
 
 type NoRecordsFoundProps = { columnSpan: number };
 type TheadProps = PropsWithChildren<{ show: boolean }>;

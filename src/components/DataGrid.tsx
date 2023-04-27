@@ -1,21 +1,33 @@
-import { Children, HTMLAttributes } from 'react';
+import { Children, Fragment, HTMLAttributes } from 'react';
 import classNames from 'classnames';
-import styles from '../assets/stylesheets/data-grid.module.scss';
+import { mount } from '../utilities/show';
+import useMediaQuery, { MediaQuery } from '../hooks/useMediaQuery';
+import styles from '../assets/stylesheets/components/data-grid.module.scss';
 
-export type DataGridProps = HTMLAttributes<HTMLDivElement>;
+export type DataGridProps = HTMLAttributes<HTMLDivElement> & {
+  pager?: JSX.Element;
+};
 
 function DataGrid(props: DataGridProps) {
-  const { children, className: classNameProp, ...otherProps } = props;
+  const isMobile = useMediaQuery(MediaQuery.isMobile);
+  const { children, className: classNameProp, pager, ...otherProps } = props;
   const className = classNames(styles.grid, classNameProp);
+  const noRecordsClassName = classNames(styles.item, styles.noRecords);
+  const hasChildren = Children.count(children) > 0;
 
   return (
-    <div {...otherProps} className={className}>
-      {Children.toArray(children).map((child, i) => (
-        <div key={`gridItem${i}`} className={styles.item}>
-          {child}
-        </div>
-      ))}
-    </div>
+    <Fragment>
+      {mount(isMobile, pager)}
+      <div {...otherProps} className={className}>
+        {mount(!hasChildren, <div className={noRecordsClassName}>No records found</div>)}
+        {Children.toArray(children).map((child, i) => (
+          <div key={`gridItem${i}`} className={styles.item}>
+            {child}
+          </div>
+        ))}
+      </div>
+      {pager}
+    </Fragment>
   );
 }
 

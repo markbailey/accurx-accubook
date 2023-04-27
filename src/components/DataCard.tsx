@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 import classNames from 'classnames';
-import styles from '../assets/stylesheets/data-card.module.scss';
+import styles from '../assets/stylesheets/components/data-card.module.scss';
 
 export type DataCardProps = HTMLAttributes<HTMLDivElement> &
   Omit<PatientRecord, 'id' | 'vaccineDate'>;

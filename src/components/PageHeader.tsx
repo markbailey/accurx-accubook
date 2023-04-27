@@ -1,7 +1,7 @@
 import { HTMLAttributes, PropsWithChildren } from 'react';
 import classNames from 'classnames';
-import styles from '../assets/stylesheets/page-header.module.scss';
 import { mount } from '../utilities/show';
+import styles from '../assets/stylesheets/components/page-header.module.scss';
 
 export type PageHeaderProps = HTMLAttributes<HTMLDivElement> &
   PropsWithChildren<{

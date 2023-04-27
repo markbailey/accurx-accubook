@@ -1,0 +1,11 @@
+{
+  "sortByOptions": [
+    { "label": "Patient Name", "value": "lastName" },
+    { "label": "NHS Number", "value": "nhsNumber" },
+    { "label": "Vaccine", "value": "vaccineType" }
+  ],
+  "orderOptions": [
+    { "label": "Ascending", "value": "asc" },
+    { "label": "Descending", "value": "desc" }
+  ]
+}

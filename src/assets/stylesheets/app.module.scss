@@ -1,12 +1,30 @@
-@use 'mixins' as *;
+@use './modules/mixins' as *;
+
+:root {
+  --footer-h: 4.125rem;
+}
 
 .content {
-  --p: var(--spacing-4);
-  @include container;
-  z-index: 1;
-  padding: var(--p);
+  --p: var(--spacing-6);
+  --pb: var(--p);
 
-  @media screen and (min-width: 62rem) {
-    --p: var(--spacing-6);
+  @include container;
+  position: relative;
+  z-index: 1;
+  padding: var(--p) var(--p) var(--pb);
+  margin-bottom: var(--spacing-0);
+
+  @media (max-width: 47.9375rem) {
+    --pb: calc(var(--footer-h) + var(--spacing-6));
   }
+}
+
+.footer {
+  z-index: 9999;
+  position: fixed;
+  left: var(--spacing-0);
+  right: var(--spacing-0);
+  bottom: var(--spacing-0);
+  padding: var(--spacing-5) var(--spacing-6);
+  background-color: var(--bg);
 }

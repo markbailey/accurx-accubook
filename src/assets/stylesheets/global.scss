@@ -1,6 +1,6 @@
 @use 'sass:map';
-@use 'variables' as *;
-@use 'mixins' as *;
+@use './modules/variables' as *;
+@use './modules/mixins' as *;
 
 :root {
   // Fonts
@@ -13,6 +13,11 @@
 
   --fw-normal: #{map.get($font-weights, 'normal')};
   --fw-bold: #{map.get($font-weights, 'bold')};
+
+  // Line Height
+  --lh-normal: #{map.get($line-heights, 'normal')};
+  --lh-medium: #{map.get($line-heights, 'medium')};
+  --lh-large: #{map.get($line-heights, 'large')};
 
   // Colors
   --primary: #{map.get($colors, 'primary')};
@@ -42,6 +47,7 @@
   --spacing-7: #{map.get($spacings, '7')};
   --spacing-8: #{map.get($spacings, '8')};
   --spacing-9: #{map.get($spacings, '9')};
+  --spacing-10: #{map.get($spacings, '10')};
 
   // Borders
   --border-1: #{map.get($border-widths, '1')};
@@ -83,6 +89,7 @@ body {
 
   font-family: var(--font-family);
   font-size: var(--fs-normal);
+  line-height: var(--lh-normal);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -91,7 +98,7 @@ body {
 
   &::before {
     position: fixed;
-    height: 100vh;
+    height: var(--screen-h);
   }
 }
 

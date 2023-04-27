@@ -1,7 +1,8 @@
-import { PropsWithChildren, createContext, useCallback, useMemo, useReducer } from 'react';
+import { PropsWithChildren, createContext, useCallback, useReducer } from 'react';
 import Api from '../services/Api';
 
 enum Actions {
+  SetTotalPages = 'SET_TOTAL_PAGES',
   SetRecords = 'SET_RECORDS',
   SetIsLoading = 'SET_IS_LOADING',
   SetError = 'SET_ERROR',
@@ -14,14 +15,15 @@ const initialState: GlobalState = {
   isLoading: false,
   error: null,
 
-  searchRecords: () => {},
-  getPagedRecords: () => {},
+  getRecords(options: QueryOptions) {},
 };
 
 export const StoreContext = createContext<GlobalState>(initialState);
 
 function reducer(state: GlobalState, action: GlobalAction): GlobalState {
   switch (action.type) {
+    case Actions.SetTotalPages:
+      return { ...state, totalPages: action.payload as number };
     case Actions.SetRecords:
       return { ...state, records: action.payload as PatientRecord[] };
     case Actions.SetIsLoading:
@@ -35,7 +37,6 @@ function reducer(state: GlobalState, action: GlobalAction): GlobalState {
 
 export function StoreProvider(props: PropsWithChildren) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const totalPages = useMemo(() => Math.ceil(25 / state.perPage), [state.perPage]); // Hardcoded 25 as API doesn't return total records
 
   const setIsLoading = useCallback((isLoading: boolean) => {
     dispatch({ type: Actions.SetIsLoading, payload: isLoading });
@@ -49,32 +50,28 @@ export function StoreProvider(props: PropsWithChildren) {
     dispatch({ type: Actions.SetRecords, payload: records });
   }, []);
 
-  const getPagedRecords = useCallback(
-    (page: number) =>
+  const setTotalPages = useCallback(
+    (totalRecords: number) => {
+      const payload = Math.ceil(totalRecords / state.perPage);
+      dispatch({ type: Actions.SetTotalPages, payload });
+    },
+    [state.perPage]
+  );
+
+  const getRecords = useCallback(
+    (options: QueryOptions = {}) =>
       Api.before(() => setIsLoading(true))
-        .vaccinations.page(page, state.perPage)
-        .then((records) => setRecords(records))
+        .vaccinations(options)
+        .then((records) => {
+          // Hardcoded 25 as API doesn't return total records
+          const totalRecords = options.search !== undefined ? records.length : 25;
+          setTotalPages(totalRecords);
+          setRecords(records);
+        })
         .catch((error) => setError(error.message))
         .finally(() => setIsLoading(false)),
-    [state.perPage, setIsLoading, setRecords, setError]
+    [state.perPage, setIsLoading, setRecords, setError, setTotalPages]
   );
 
-  const searchRecords = useCallback(
-    (search: string) => {
-      if (search.length < 2) return;
-      Api.before(() => setIsLoading(true))
-        .vaccinations.search(search)
-        .then((records) => setRecords(records))
-        .catch((error) => setError(error.message))
-        .finally(() => setIsLoading(false));
-    },
-    [setIsLoading, setRecords, setError]
-  );
-
-  return (
-    <StoreContext.Provider
-      {...props}
-      value={{ ...state, totalPages, searchRecords, getPagedRecords }}
-    />
-  );
+  return <StoreContext.Provider {...props} value={{ ...state, getRecords }} />;
 }

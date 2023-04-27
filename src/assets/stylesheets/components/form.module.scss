@@ -1,0 +1,82 @@
+@use '../modules/variables' as *;
+
+:root {
+  --field-h: 2.625rem;
+}
+
+.formField {
+  width: var(--full);
+  font-size: var(--fs-normal);
+  padding: var(--spacing-4) var(--spacing-6);
+  line-height: var(--lh-large);
+
+  &:not(:disabled, input:read-only) {
+    color: var(--text);
+    background-color: var(--paper);
+    border: var(--border-1) solid var(--paper);
+
+    &:focus {
+      outline: var(--border-2) solid var(--primary);
+      outline-offset: calc(var(--border-2) * -1);
+    }
+  }
+}
+
+.formGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-6);
+
+  &:not(:last-child) {
+    margin-bottom: var(--spacing-6);
+  }
+
+  > input,
+  > select {
+    flex: 1;
+  }
+
+  > button {
+    flex-shrink: var(--spacing-0);
+  }
+
+  &:not(.noStacking) {
+    @media (max-width: 47.9375rem) {
+      flex-direction: column;
+      gap: var(--spacing-4);
+      align-items: stretch;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    > input,
+    > select,
+    > button {
+      align-self: stretch;
+    }
+  }
+}
+
+// Specific Fields
+.search {
+  position: relative;
+  isolation: isolate;
+  padding-left: var(--spacing-10);
+
+  &::before {
+    content: '';
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--full);
+    height: var(--full);
+    background-image: $search-icon;
+    background-repeat: no-repeat;
+    // background-position: var(--spacing-4) center;
+  }
+}
+
+.select {
+  min-height: var(--field-h);
+}

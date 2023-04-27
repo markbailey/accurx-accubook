@@ -6,11 +6,13 @@ import { ReactComponent as ArrowUpIcon } from '../assets/icons/arrow_up.svg';
 import { mount } from '../utilities/show';
 import useEventListener from '../hooks/useEventListener';
 import Button, { ButtonProps } from './Button';
-import styles from '../assets/stylesheets/scroll-to-top.module.scss';
+import styles from '../assets/stylesheets/components/scroll-to-top.module.scss';
 
 type ScrollToTopProps = ButtonProps & {
   offset: number;
 };
+
+const target = document.getElementById('root') ?? document.body;
 
 function ScrollToTop(props: ScrollToTopProps) {
   const [shouldMount, setShouldMount] = useState(false);
@@ -48,7 +50,7 @@ function ScrollToTop(props: ScrollToTopProps) {
       >
         <ArrowUpIcon />
       </Button>,
-      document.getElementById('root') as HTMLElement
+      target
     )
   );
 }
