@@ -1,0 +1,31 @@
+@use 'sass:map';
+@use '../modules/variables' as *;
+@use '../modules/mixins' as *;
+
+.pager {
+  display: flex;
+  gap: var(--spacing-3);
+
+  &:not(:last-child) {
+    margin-bottom: var(--spacing-4);
+  }
+}
+
+.button {
+  $color: map.get($colors, 'light');
+  $background-color: map.get($colors, 'paper-dark');
+
+  @include button-style($background-color, $color);
+  padding: var(--spacing-3) !important;
+  min-width: var(--spacing-9);
+}
+
+// Light Mode
+@media (prefers-color-scheme: light) {
+  .button {
+    $color: map.get($colors, 'dark');
+    $background-color: map.get($colors, 'paper-light');
+
+    @include button-style($background-color, $color);
+  }
+}

@@ -1,5 +1,5 @@
-@use 'variables' as *;
-@use 'mixins' as *;
+@use '../modules/variables' as *;
+@use '../modules/mixins' as *;
 
 .card {
   @include background-icon(var(--128));

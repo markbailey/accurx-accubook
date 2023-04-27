@@ -1,4 +1,4 @@
-@use 'mixins' as *;
+@use '../modules/mixins' as *;
 
 :root {
   --appbar-h: 3.25rem;
@@ -22,7 +22,6 @@
   align-items: center;
   gap: var(--spacing-0);
   min-height: var(--appbar-h);
-  padding: var(--spacing-0);
 }
 
 .brand {
@@ -30,6 +29,7 @@
   gap: var(--spacing-4);
   align-items: center;
   padding: var(--spacing-6);
+  margin-left: calc(var(--spacing-6) * -1);
 }
 
 .appName,
@@ -91,5 +91,6 @@
   @media (max-width: 47.9375rem) {
     grid-template-columns: auto;
     justify-content: center;
+    margin-right: var(--my);
   }
 }

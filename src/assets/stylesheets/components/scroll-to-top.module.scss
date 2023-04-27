@@ -1,8 +1,9 @@
 .button {
-  --trans-x: calc(100% + var(--spacing-7));
+  --offset-y: calc(var(--footer-h) + var(--spacing-6));
+  --trans-x: calc(100% + var(--offset-y));
 
   position: fixed;
-  bottom: var(--spacing-6);
+  bottom: var(--offset-y);
   right: var(--spacing-6);
   z-index: 999;
   padding: var(--spacing-4);
@@ -10,6 +11,10 @@
 
   transition: all 0.2s ease-in-out;
   transform: translateY(var(--trans-x));
+
+  @media (min-width: 48rem) {
+    --offset-y: var(--spacing-6);
+  }
 }
 
 .show {

@@ -1,20 +1,30 @@
 @use 'sass:color';
 @use 'sass:map';
 
-@use 'variables' as *;
-@use 'mixins' as *;
+@use '../modules/variables' as *;
+@use '../modules/mixins' as *;
 
 .button {
   $color: map.get($colors, 'light');
   $background-color: map.get($colors, 'primary');
   @include button-style($background-color, $color);
 
-  padding: var(--spacing-5) var(--spacing-6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--spacing-5) var(--spacing-7);
   text-transform: uppercase;
+  line-height: var(--lh-medium);
 }
 
 .danger {
   $color: map.get($colors, 'light');
   $background-color: map.get($colors, 'danger');
   @include button-style($background-color, $color);
+}
+
+.iconOnly {
+  padding: var(--spacing-4);
+  min-width: var(--spacing-9);
+  line-height: var(--lh-large);
 }
