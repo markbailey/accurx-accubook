@@ -1,0 +1,10 @@
+.loader {
+  z-index: 9999;
+  position: fixed;
+  inset: var(--spacing-0);
+  top: var(--appbar-h);
+  display: grid;
+  place-items: center;
+  background-color: rgb(0 0 0 / 0.75);
+  color: var(--light);
+}
