@@ -2,6 +2,7 @@ import { HTMLAttributes, PropsWithChildren } from 'react';
 import classNames from 'classnames';
 import { mount } from '../utilities/show';
 import styles from '../assets/stylesheets/components/page-header.module.scss';
+import useMediaQuery, { MediaQuery } from '../hooks/useMediaQuery';
 
 export type PageHeaderProps = HTMLAttributes<HTMLDivElement> &
   PropsWithChildren<{
@@ -9,14 +10,15 @@ export type PageHeaderProps = HTMLAttributes<HTMLDivElement> &
   }>;
 
 function PageHeader(props: PageHeaderProps) {
+  const isMobile = useMediaQuery(MediaQuery.isMobile);
   const { children, className: classNameProp, title, ...otherProps } = props;
   const className = classNames(styles.header, classNameProp);
-  const hasChildren = !!children;
+  const showChildren = !!children && !isMobile;
 
   return (
     <div {...otherProps} className={className}>
       <h1 className={styles.title}>{title}</h1>
-      {mount(hasChildren, <div>{children}</div>)}
+      {mount(showChildren, <div>{children}</div>)}
     </div>
   );
 }
