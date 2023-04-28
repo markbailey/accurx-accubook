@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { mount } from '../utilities/show';
 import styles from '../assets/stylesheets/components/data-table.module.scss';
 
-type NoRecordsFoundProps = { columnSpan: number };
+type NoRecordsFoundProps = { columnSpan: number; show: boolean };
 type TheadProps = PropsWithChildren<{ show: boolean }>;
 type TFootProps = TheadProps & { columnSpan: number };
 interface DataTableProps<RT> extends HTMLAttributes<HTMLTableElement> {
@@ -24,13 +24,15 @@ const TFoot = ({ children, show, columnSpan }: TFootProps) =>
     </tfoot>
   );
 
-const NoRecordsFound = ({ columnSpan }: NoRecordsFoundProps) => (
-  <tr>
-    <td colSpan={columnSpan} align="center">
-      <span>No records found</span>
-    </td>
-  </tr>
-);
+const NoRecordsFound = ({ columnSpan, show }: NoRecordsFoundProps) =>
+  mount(
+    show,
+    <tr>
+      <td colSpan={columnSpan} align="center">
+        <span>No records found</span>
+      </td>
+    </tr>
+  );
 
 function DataTable<RT extends Record<string, string | number>>(props: DataTableProps<RT>) {
   const { className: classNameProp, columns, records, headless, pager, ...otherProps } = props;
@@ -52,7 +54,7 @@ function DataTable<RT extends Record<string, string | number>>(props: DataTableP
       </THead>
 
       <tbody>
-        {mount(records.length === 0, <NoRecordsFound columnSpan={columns.length} />)}
+        <NoRecordsFound show={records.length === 0} columnSpan={columns.length} />
         {records.map((record, index) => (
           <tr key={index} className={styles.dataRow}>
             {columns.map((column) => (
