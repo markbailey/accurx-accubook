@@ -14,7 +14,7 @@ function useMediaQuery(mediaQuery: string) {
   const [mediaQueryList, setMediaQueryList] = useState<MediaQueryList | null>(null);
 
   useEffect(() => {
-    const list = window.matchMedia(mediaQuery);
+    const list = matchMedia(mediaQuery);
     setMediaQueryList(list);
     setIsMatch(list.matches);
   }, [mediaQuery]);
