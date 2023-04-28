@@ -24,3 +24,5 @@ Multiple days, as I had to spread the time spent due to time restraints.
 - I would put more time into planning and refactor areas of the application i.e. useFilters hook.
 - I would add functionality to create more records
 - I would consider adding auth or removing / repalcing the profile button (currently for show).
+- I would put more time into the Loader component (currently very basic).
+- I would implement a better system for handling and displaying errors i.e. Modals.
