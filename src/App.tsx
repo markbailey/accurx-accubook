@@ -51,10 +51,10 @@ function App() {
     <Fragment>
       <Appbar user={dummyUser} />
       <PageHeader title="Covid19 Vaccinations">
-        {mount(!isMobile, <PageControls search={search} onSearchChange={onSearchChange} />)}
+        <PageControls search={search} onSearchChange={onSearchChange} />
       </PageHeader>
 
-      {mount(isLoading, <Loader />)}
+      <Loader show={isLoading} />
       <main className={styles.content}>
         <FormGroup>
           <label>Filters</label>
