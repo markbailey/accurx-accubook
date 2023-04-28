@@ -4,6 +4,7 @@ import Pagination from '../components/Pagination';
 const onPageChange = jest.fn();
 const addEventListener = jest.fn();
 const removeEventListener = jest.fn();
+
 globalThis.matchMedia = jest
   .fn()
   .mockImplementation(() => ({ matches: false, addEventListener, removeEventListener }));
