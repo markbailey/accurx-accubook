@@ -3,5 +3,5 @@ import Loader from '../../components/Loader';
 
 export default createBoard({
   name: 'Loader',
-  Board: () => <Loader />,
+  Board: () => <Loader show />,
 });
